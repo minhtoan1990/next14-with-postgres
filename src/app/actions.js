@@ -3,11 +3,10 @@
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 
-export const createComment = async (prevState, formValues) => {
+const createComment = async (prevState, formValues) => {
   try {
     const result =
-    await sql`INSERT INTO Comments (Id, Name, Content, CreatedAt) VALUES (
-      ${Math.floor(Math.random() * 10001)},
+    await sql`INSERT INTO Comments (Name, Content, CreatedAt) VALUES (
       ${formValues.get('name')}, 
       ${formValues.get('content')}, 
       ${JSON.stringify(new Date())});`;
@@ -17,3 +16,20 @@ export const createComment = async (prevState, formValues) => {
     return `Failed ${JSON.stringify(error)}`
   }
 };
+
+async function deleteComment(prevState, formData ) {
+  try {
+    await sql`
+      DELETE FROM Comments
+      WHERE id = ${formData.get('id')};
+    `
+
+    revalidatePath('/')
+    return { message: `Deleted Comments ${formData.get('id')}` }
+  } catch (e) {
+    return { message: 'Failed to delete Comment' }
+  }
+}
+
+
+export {createComment, deleteComment};

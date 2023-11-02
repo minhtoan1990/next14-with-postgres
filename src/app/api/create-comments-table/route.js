@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   try {
     const result =
-      await sql`CREATE TABLE comments (Id int, Name varchar(255), Content varchar(255), CreatedAt TIMESTAMP );`;
+      await sql`CREATE TABLE comments (Id SERIAL PRIMARY KEY, Name varchar(255), Content varchar(255), CreatedAt TIMESTAMP );`;
       // await sql`DROP TABLE comments`;
     return NextResponse.json({ result }, { status: 200 });
   } catch (error) {

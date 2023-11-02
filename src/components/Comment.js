@@ -1,8 +1,10 @@
+'use client';
 import dayjs from 'dayjs';
 import React from 'react';
 
 export const Comment = (drops) => {
   const { id, name, content, createdAt } = drops.comment;
+
   return (
     <div className='border py-1 px-2 rounded mb-1'>
       <p className='font-bold text-sm'>
@@ -12,9 +14,6 @@ export const Comment = (drops) => {
         </span>
       </p>
       <p className='text-sm'>{content}</p>
-      <button className="btn btn-blue">
-        Delete
-      </button>
     </div>
   );
 };
